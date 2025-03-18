@@ -1,6 +1,7 @@
 package com.att.tdp.popcorn_palace.service;
 
 import com.att.tdp.popcorn_palace.dto.MovieDTO;
+import com.att.tdp.popcorn_palace.exception.ResourceAlreadyExistsException;
 import com.att.tdp.popcorn_palace.exception.ResourceNotFoundException;
 import com.att.tdp.popcorn_palace.model.Movie;
 import com.att.tdp.popcorn_palace.repository.MovieRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieService {
@@ -22,12 +24,18 @@ public class MovieService {
 
     // Add a New Movie
     public Movie addMovie(MovieDTO movieDTO) {
+        Optional<Movie> existingMovie = movieRepository.findByTitle(movieDTO.getTitle());
+        if (existingMovie.isPresent()) {
+            throw new ResourceAlreadyExistsException("A movie with the title '" + movieDTO.getTitle() + "' already exists.");
+        }
+
         Movie movie = new Movie();
         movie.setTitle(movieDTO.getTitle());
         movie.setGenre(movieDTO.getGenre());
         movie.setDuration(movieDTO.getDuration());
         movie.setRating(movieDTO.getRating());
         movie.setReleaseYear(movieDTO.getReleaseYear());
+
         return movieRepository.save(movie);
     }
 
