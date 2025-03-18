@@ -8,6 +8,7 @@ target/
 .apt_generated
 .settings
 .sts4-cache
+.DS_Store
 
 ### IntelliJ IDEA ###
 .idea
