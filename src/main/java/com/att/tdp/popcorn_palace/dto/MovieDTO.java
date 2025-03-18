@@ -1,5 +1,6 @@
 package com.att.tdp.popcorn_palace.dto;
 
+import com.att.tdp.popcorn_palace.model.Movie;
 import jakarta.validation.constraints.*;
 
 import lombok.*;
@@ -27,5 +28,14 @@ public class MovieDTO {
 
     @Min(value = 1900, message = "Release year must be realistic")
     private int releaseYear;
+
+    public MovieDTO(Movie movie) {
+        this.id = movie.getId();
+        this.title = movie.getTitle();
+        this.genre = movie.getGenre();
+        this.duration = movie.getDuration();
+        this.rating = movie.getRating();
+        this.releaseYear = movie.getReleaseYear();
+    }
 }
 

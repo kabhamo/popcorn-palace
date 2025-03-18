@@ -1,5 +1,6 @@
 package com.att.tdp.popcorn_palace.dto;
 
+import com.att.tdp.popcorn_palace.model.Showtime;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -27,5 +28,14 @@ public class ShowtimeDTO {
 
     @Positive(message = "Price must be greater than 0")
     private double price;
+
+    public ShowtimeDTO(Showtime showtime) {
+        this.id = showtime.getId();
+        this.movieId = showtime.getMovie().getId(); // Extracting Movie ID instead of entire Movie object
+        this.theater = showtime.getTheater();
+        this.startTime = showtime.getStartTime();
+        this.endTime = showtime.getEndTime();
+        this.price = showtime.getPrice();
+    }
 }
 
