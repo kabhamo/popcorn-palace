@@ -5,6 +5,8 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
+
 
 @Getter
 @Setter
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class TicketDTO {
 
-    private Long id; // Read-only in responses
+    private UUID id; // Read-only in responses
 
     @NotNull(message = "Showtime ID is required")
     private Long showtimeId;
