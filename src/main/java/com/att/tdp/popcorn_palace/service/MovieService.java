@@ -20,12 +20,6 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    // Get Movie By ID
-    public Movie getMovieById(Long id) {
-        return movieRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Movie with ID " + id + " not found"));
-    }
-
     // Add a New Movie
     public Movie addMovie(MovieDTO movieDTO) {
         Movie movie = new Movie();
@@ -37,23 +31,24 @@ public class MovieService {
         return movieRepository.save(movie);
     }
 
-    // Update Movie
-    public Movie updateMovie(Long id, MovieDTO movieDTO) {
-        Movie existingMovie = getMovieById(id); // Throws exception if not found
-        existingMovie.setTitle(movieDTO.getTitle());
+    // Update Movie by Title
+    public Movie updateMovieByTitle(String title, MovieDTO movieDTO) {
+        Movie existingMovie = movieRepository.findByTitle(title)
+                .orElseThrow(() -> new ResourceNotFoundException("Movie with title '" + title + "' not found"));
+
         existingMovie.setGenre(movieDTO.getGenre());
         existingMovie.setDuration(movieDTO.getDuration());
         existingMovie.setRating(movieDTO.getRating());
         existingMovie.setReleaseYear(movieDTO.getReleaseYear());
+
         return movieRepository.save(existingMovie);
     }
 
-    // Delete Movie
-    public void deleteMovie(Long id) {
-        if (!movieRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Movie with ID " + id + " not found");
-        }
-        movieRepository.deleteById(id);
+    // Delete Movie by Title
+    public void deleteMovieByTitle(String title) {
+        Movie movie = movieRepository.findByTitle(title)
+                .orElseThrow(() -> new ResourceNotFoundException("Movie with title '" + title + "' not found"));
+        movieRepository.delete(movie);
     }
 }
 
