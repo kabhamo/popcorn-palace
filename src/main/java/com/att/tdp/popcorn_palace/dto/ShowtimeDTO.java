@@ -12,10 +12,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ShowtimeDTO {
 
-    private Long id; // Read-only in responses
+    private Long id;
 
     @NotNull(message = "Movie ID is required")
-    private Long movieId; // Instead of returning the whole Movie entity
+    private Long movieId;
 
     @NotBlank(message = "Theater name is required")
     private String theater;
@@ -31,7 +31,7 @@ public class ShowtimeDTO {
 
     public ShowtimeDTO(Showtime showtime) {
         this.id = showtime.getId();
-        this.movieId = showtime.getMovie().getId(); // Extracting Movie ID instead of entire Movie object
+        this.movieId = showtime.getMovie().getId();
         this.theater = showtime.getTheater();
         this.startTime = showtime.getStartTime();
         this.endTime = showtime.getEndTime();

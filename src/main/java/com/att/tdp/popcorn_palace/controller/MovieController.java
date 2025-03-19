@@ -1,6 +1,7 @@
 package com.att.tdp.popcorn_palace.controller;
 
 import com.att.tdp.popcorn_palace.dto.MovieDTO;
+import com.att.tdp.popcorn_palace.exception.InvalidInputException;
 import com.att.tdp.popcorn_palace.model.Movie;
 import com.att.tdp.popcorn_palace.service.MovieService;
 import jakarta.validation.Valid;
@@ -38,11 +39,7 @@ public class MovieController {
     // POST: Update a Movie by Title
     @PostMapping("/update/{movieTitle}")
     public ResponseEntity<MovieDTO> updateMovie(@PathVariable String movieTitle, @Valid @RequestBody MovieDTO movieDTO) {
-        // Validate that movieTitle is not blank or contains only whitespace
-        if (movieTitle == null || movieTitle.trim().isEmpty()) {
-            throw new IllegalArgumentException("Movie title must not be blank.");
-        }
-
+        validateMovieTitle(movieTitle);
         Movie updatedMovie = movieService.updateMovieByTitle(movieTitle, movieDTO);
         return ResponseEntity.ok(new MovieDTO(updatedMovie));
     }
@@ -50,13 +47,16 @@ public class MovieController {
     // DELETE: Remove a Movie by Title (200 OK)
     @DeleteMapping("/{movieTitle}")
     public ResponseEntity<Void> deleteMovie(@PathVariable String movieTitle) {
-        // Validate that movieTitle is not blank or contains only whitespace
-        if (movieTitle == null || movieTitle.trim().isEmpty()) {
-            throw new IllegalArgumentException("Movie title must not be blank.");
-        }
-
+        validateMovieTitle(movieTitle);
         movieService.deleteMovieByTitle(movieTitle);
         return ResponseEntity.ok().build();
+    }
+
+    // Validate Movie Title
+    private void validateMovieTitle(String movieTitle) {
+        if (movieTitle == null || movieTitle.trim().isEmpty()) {
+            throw new InvalidInputException("Invalid Movie Title. Title must not be blank or empty.");
+        }
     }
 }
 
