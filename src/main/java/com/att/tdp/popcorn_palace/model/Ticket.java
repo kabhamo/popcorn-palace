@@ -3,7 +3,6 @@ package com.att.tdp.popcorn_palace.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -16,29 +15,22 @@ public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private UUID bookingId;
 
     @ManyToOne
     @JoinColumn(name = "showtime_id", nullable = false)
     private Showtime showtime; // Relationship with Showtime
 
     @Column(nullable = false)
-    private String customerName;
-
-    @Column(nullable = false)
     private String seatNumber;
-
-    @Column(nullable = false)
-    private LocalDateTime bookingTime;
 
     @Column(nullable = false)
     private UUID userId;
 
     @PrePersist
     public void generateUUID() {
-        if (id == null) {
-            id = UUID.randomUUID();
+        if (bookingId == null) {
+            bookingId = UUID.randomUUID();
         }
     }
 }
-
