@@ -37,16 +37,16 @@ public class MovieController {
     }
 
     // POST: Update a Movie by Title
-    @PostMapping("/update/{movieTitle}")
-    public ResponseEntity<MovieDTO> updateMovie(@PathVariable String movieTitle, @Valid @RequestBody MovieDTO movieDTO) {
+    @RequestMapping(value = {"/update/{movieTitle}", "/update"}, method = RequestMethod.POST)
+    public ResponseEntity<MovieDTO> updateMovie(@PathVariable(required = false) String movieTitle, @Valid @RequestBody MovieDTO movieDTO) {
         validateMovieTitle(movieTitle);
         Movie updatedMovie = movieService.updateMovieByTitle(movieTitle, movieDTO);
         return ResponseEntity.ok(new MovieDTO(updatedMovie));
     }
 
     // DELETE: Remove a Movie by Title (200 OK)
-    @DeleteMapping("/{movieTitle}")
-    public ResponseEntity<Void> deleteMovie(@PathVariable String movieTitle) {
+    @RequestMapping(value = {"/{movieTitle}", ""}, method = RequestMethod.DELETE)
+    public ResponseEntity<MovieDTO> deleteMovie(@PathVariable(required = false) String movieTitle) {
         validateMovieTitle(movieTitle);
         movieService.deleteMovieByTitle(movieTitle);
         return ResponseEntity.ok().build();
