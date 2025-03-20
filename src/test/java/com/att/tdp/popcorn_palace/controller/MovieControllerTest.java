@@ -2,7 +2,6 @@ package com.att.tdp.popcorn_palace.controller;
 
 import com.att.tdp.popcorn_palace.dto.MovieDTO;
 import com.att.tdp.popcorn_palace.exception.GlobalExceptionHandler;
-import com.att.tdp.popcorn_palace.exception.InvalidInputException;
 import com.att.tdp.popcorn_palace.model.Movie;
 import com.att.tdp.popcorn_palace.service.MovieService;
 import com.fasterxml.jackson.databind.ObjectMapper;

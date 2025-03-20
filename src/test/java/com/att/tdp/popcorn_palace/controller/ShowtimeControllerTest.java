@@ -2,7 +2,6 @@ package com.att.tdp.popcorn_palace.controller;
 
 import com.att.tdp.popcorn_palace.dto.ShowtimeDTO;
 import com.att.tdp.popcorn_palace.exception.GlobalExceptionHandler;
-import com.att.tdp.popcorn_palace.exception.InvalidInputException;
 import com.att.tdp.popcorn_palace.exception.ShowtimeOverlapException;
 import com.att.tdp.popcorn_palace.model.Movie;
 import com.att.tdp.popcorn_palace.model.Showtime;
